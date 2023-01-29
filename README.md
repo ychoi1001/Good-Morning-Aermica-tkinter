@@ -1,5 +1,6 @@
 <h1 align="center" id="title">Good Morning America - tkinter</h1>
 This is an enhanced version of the [Good Morning, America!] (https://github.com/ychoi1001/UWO/tree/main/Year%201/Computer%20Science%201026/Good%20Morning%20America) project.
+[click here](www.google.com)
 
 * Desinged GUI using tkinter
 * Computes the cost of breakfast at the <b>Good Morning America!</b> restaurant
