@@ -31,17 +31,45 @@ def add(item):
     else:
         items[item] = 1
     
-    # Print order
+    # Print/update order in the basket and print/update price
     print_order()
+    print_price()
 
-
+# To print order in basket
 def print_order():
+    # Set global variable items
     global items
-
     tmp = ""
+
+    # To show all the orders
     for i in items:
         tmp = tmp + i + " X " + str(items.get(i)) + "\n"
+    
+    # Delete texts before update
+    basket.delete('1.0', tk.END)
 
+    # Insert updated order
+    basket.insert(tk.INSERT, tmp)
+
+# To print total price
+def print_price():
+    # Set global variable
+    global totalPrice
+
+    # Print final price
+    labelPrice.configure(text="$"+str(round(totalPrice,2)))
+
+# Place order
+def place_order(): 
+    # Reset all
+    global totalPrice, items
+    totalPrice = 0
+    del items # Delete items
+
+    items = {}
+    print_price()
+    print_order()    
+    
 
 # Window = instance of Tkinter's Tk class
 # Create a new window and assign it to the variable window
@@ -79,22 +107,27 @@ numMenu = len(listOfMenu)
 # Set count = 0
 countMenu = 0
 
-# Generate buttons dynamically in frame1
-while (countMenu < numMenu):
-    for row in range(3):
-        for col in range (3):
-            tk.Button(frame1, text=listOfMenu[countMenu], padx=5, pady=5, width=10, height=2).grid(row=row, column=col)
-            countMenu = countMenu + 1
+# Generate buttons in frame1
+tk.Button(frame1, text="Egg", command=lambda : add('Egg'), width=10, height=2).grid(row=0, column=0)
+tk.Button(frame1, text="Bacon", command=lambda : add('Bacon'), width=10, height=2).grid(row=0, column=1)
+tk.Button(frame1, text="Sausage", command=lambda : add('Sausage'), width=10, height=2).grid(row=0, column=2)
+tk.Button(frame1, text="Hash Brown", command=lambda : add('Hash Brown'), width=10, height=2).grid(row=1, column=0)
+tk.Button(frame1, text="Toast", command=lambda : add('Toast'), width=10, height=2).grid(row=1, column=1)
+tk.Button(frame1, text="Coffee", command=lambda : add('Coffee'), width=10, height=2).grid(row=1, column=2)
+tk.Button(frame1, text="Small Breakfast", command=lambda : add('Small Breakfast'), width=10, height=2).grid(row=2, column=0)
+tk.Button(frame1, text="Regular Breakfast", command=lambda : add('Regular Breakfast'), width=10, height=2).grid(row=2, column=1)
+tk.Button(frame1, text="Big Breakfast", command=lambda : add('Big Breakfast'), width=10, height=2).grid(row=2, column=2)
 
 # Create a basket in frame2
 basket = tk.Text(frame2)
 basket.pack()
 
 # Create a Order button in frame3
-tk.Button(frame3, text="Place order", width=10, height=2, padx=5, pady=5).grid(row=0, column=0)
+tk.Button(frame3, text="Place order", command=place_order, width=10, height=2, padx=5, pady=5).grid(row=0, column=0)
 
 # Place text for total in frame3
-labelPrice = tk.Label(frame3, text="Total: 0", width=80, padx=10, pady=10, font=("Arial", 15)).grid(row=0, column=2)
+labelPrice = tk.Label(frame3, text="Total: 0", width=80, padx=10, pady=10, font=("Arial", 15))
+labelPrice.grid(row=0, column=2)
 
 # Run Tkinter event loop
 window.mainloop()
